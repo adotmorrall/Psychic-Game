@@ -18,8 +18,9 @@ function setInnerText(id, text) {
 var pcGuess = getRandomValue(letters);
 //Used to see pcGuess and make sure wins & losses work
 console.log(pcGuess);
-//Listen for User keypresses and react accordingly
-document.onkeypress = function (evt) {
+
+//Listen for User keypresses
+document.onkeypress = function (event) {
     var userGuess = event.key;
     console.log(userGuess);
     if (letters.indexOf(userGuess) > -1) {
@@ -32,16 +33,23 @@ document.onkeypress = function (evt) {
             //The user guessed the wrong letter
             guessesLeft--;
         }
-        //We need to do a counple more things every time
+        //We need to do a couple more things every time
         if (guessesLeft === 0) {
             //User lost
             losses++;
             resetGameWithMessage('You lost');
         }
-        //Next big thing is we need to update all these values int he DOM
+        //Next big thing is we need to update all these values in the DOM
         setInnerText('wins', wins);
         setInnerText('losses', losses);
         setInnerText('guessesLeft', guessesLeft);
+    
+        //Get letters to show on HTML
+        var guessedLetters = document.getElementById("guessesSoFar");
+
+        document.onkeypress = function(event){
+            guessedLetters.innerHTML = userGuess;
+        }
     }
     else {
         alert('You must press a valid letter.');
